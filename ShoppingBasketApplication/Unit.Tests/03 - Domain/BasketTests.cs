@@ -4,23 +4,128 @@ using Domain.Model;
 using Domain.Model.Abstract;
 using System.Diagnostics;
 using System.Xml.Linq;
+using Xunit.Abstractions;
 
 public class BasketTests
 {
     [Fact]
-    public void Basket_CreateNewBaskt_ReturnsEmptyBasket()
+    public void AddItem_AddExistentItem_ThrowsException()
     {
         // Arrange
         var basket = new Basket();
 
-        // Act
-        var basketItems = basket.GetItems();
-        var basketTotalPrice = basket.GetTotalPrice();
+        var item1 = new Item
+        {
+            Id = Guid.NewGuid(),
+            Name = "Soup",
+            Description = "item test",
+            Discounts = new List<Guid> { Guid.NewGuid() },
+            Price = 0.65
+        };
 
-        // Assert
-        Assert.NotNull(basket);
-        Assert.Null(basketItems);
-        Assert.Equal(0, basketTotalPrice);
+        var itemQuantity = 1;
+
+        basket.AddItem(item1, itemQuantity);
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() => basket.AddItem(item1, itemQuantity));
+
+        Assert.Equal("Invalid operation, item already exists", exception.Message);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void AddItem_AddItemWithInvalidQuantity_ThrowsException(int itemQuantity)
+    {
+        // Arrange
+        var basket = new Basket();
+
+        var item1 = new Item
+        {
+            Id = Guid.NewGuid(),
+            Name = "Soup",
+            Description = "item test",
+            Discounts = new List<Guid> { Guid.NewGuid() },
+            Price = 0.65
+        };
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() => basket.AddItem(item1, itemQuantity));
+
+        Assert.Equal("Invalid quantity", exception.Message);
+    }
+
+    [Fact]
+    public void UpdateItem_UpdateInexistentItem_ThrowsException()
+    {
+        // Arrange
+        var basket = new Basket();
+
+        var item = new Item
+        {
+            Id = Guid.NewGuid(),
+            Name = "Soup",
+            Description = "item test",
+            Discounts = new List<Guid> { Guid.NewGuid() },
+            Price = 0.65
+        };
+
+        var itemQuantity = 1;
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() => basket.UpdateItem(item, itemQuantity));
+
+        Assert.Equal("Invalid operation, item doesn't exists", exception.Message);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void UpdateItem_UpdateExistentItemWithInvalidQuantity_ThrowsException(int newItemQuantity)
+    {
+        // Arrange
+        var basket = new Basket();
+
+        var item = new Item
+        {
+            Id = Guid.NewGuid(),
+            Name = "Soup",
+            Description = "item test",
+            Discounts = new List<Guid> { Guid.NewGuid() },
+            Price = 0.65
+        };
+
+        var itemQuantity = 1;
+
+        basket.AddItem(item, itemQuantity);
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() => basket.UpdateItem(item, newItemQuantity));
+
+        Assert.Equal("Invalid quantity", exception.Message);
+    }
+
+    [Fact]
+    public void RemoveItem_RemoveInexistentItem_ThrowsException()
+    {
+        // Arrange
+        var basket = new Basket();
+
+        var item = new Item
+        {
+            Id = Guid.NewGuid(),
+            Name = "Soup",
+            Description = "item test",
+            Discounts = new List<Guid> { Guid.NewGuid() },
+            Price = 0.65
+        };
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() => basket.RemoveItem(item));
+
+        Assert.Equal("Invalid operation, item doesn't exists", exception.Message);
+
     }
 
     [Fact]
