@@ -1,4 +1,4 @@
-﻿namespace Domain.Model;
+﻿namespace Domain.Model.Entities;
 
 using Domain.Model.Abstract;
 

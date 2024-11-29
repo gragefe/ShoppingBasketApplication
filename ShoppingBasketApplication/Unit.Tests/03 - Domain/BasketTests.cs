@@ -2,6 +2,7 @@
 
 using Domain.Model;
 using Domain.Model.Abstract;
+using Domain.Model.Entities;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Xunit.Abstractions;

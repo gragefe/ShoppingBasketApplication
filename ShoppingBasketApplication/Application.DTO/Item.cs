@@ -1,4 +1,4 @@
-﻿namespace Domain.Model;
+﻿namespace Application.DTO;
 
 public class Item
 {
@@ -11,9 +11,4 @@ public class Item
     public List<Guid> Discounts { get; set; }
 
     public double Price { get; set; }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Id, Name);
-    }
 }

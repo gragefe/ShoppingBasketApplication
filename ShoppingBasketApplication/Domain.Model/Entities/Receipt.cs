@@ -1,5 +1,4 @@
-﻿namespace Domain.Model;
-
+﻿namespace Domain.Model.Entities;
 public class Receipt
 {
     public List<ReceiptItem> Items { get; set; }
