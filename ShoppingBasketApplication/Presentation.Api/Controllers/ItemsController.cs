@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class ItemsController : ControllerBase
 {
-    private readonly ISearchItemService _getItemService;
-    public ItemsController(ISearchItemService getItemService)
+    private readonly ISearchItemService _searchItemService;
+    public ItemsController(ISearchItemService searchItemService)
     {
-        _getItemService = getItemService;
+        _searchItemService = searchItemService;
     }
 
-    [HttpGet(Name = "Search")]
-    public async Task<ActionResult<Page<Item>>> SearechAsync([FromBody] ItemSearchContext searchContext)
+    [HttpGet(Name = "SearchAsync")]
+    public async Task<ActionResult<Page<Item>>> SearchAsync([FromBody] ItemSearchContext searchContext)
     {
-        return this.Ok(await _getItemService.SearechAsync(searchContext));
+        return this.Ok(await _searchItemService.SearchAsync(searchContext));
     }
 }

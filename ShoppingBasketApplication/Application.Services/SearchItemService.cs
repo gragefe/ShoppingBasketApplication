@@ -16,10 +16,10 @@ public class SearchItemService: ISearchItemService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Item>> SearechAsync(ItemSearchContext searchContext)
+    public async Task<Page<Item>> SearchAsync(ItemSearchContext searchContext)
     {
-        var items = await _repository.SearchAsync(searchContext.ToDomain());
+        var result = await _repository.SearchAsync(searchContext.ToDomain());
 
-        return items.Select(i => i.ToDto());
+        return result.ToDto();
     }
 }

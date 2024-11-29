@@ -1,4 +1,4 @@
-﻿namespace Application.DTO;
+﻿namespace Domain.Model.Entities;
 
 public class Page<T> where T : class
 {

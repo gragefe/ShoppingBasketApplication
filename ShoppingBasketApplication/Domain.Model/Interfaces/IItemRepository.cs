@@ -4,5 +4,7 @@ using Domain.Model.Entities;
 
 public interface IItemRepository
 {
-    Task<IEnumerable<Item>> SearchAsync(ItemSearchContext searchContext);
+    Task<Item> CreateAsync(Item item);
+
+    Task<Page<Item>> SearchAsync(ItemSearchContext searchContext);
 }

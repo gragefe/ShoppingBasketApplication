@@ -15,17 +15,35 @@ public class ItemRepository : IItemRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Item>> SearchAsync(ItemSearchContext searchContext)
+    public async Task<Item> CreateAsync(Item item)
     {
-        var result = await ItemSearchQueryBuilder.BuildSearchQuery(searchContext, _context).ToListAsync();
+        var ItemData = item.ToSqlEntity();
 
-        var items = new List<Item>();
+        await _context.AddAsync(ItemData);
+        await _context.SaveChangesAsync();
 
-        foreach (var item in result)
+        return ItemData.ToDomain();
+    }
+
+    public async Task<Page<Item>> SearchAsync(ItemSearchContext searchContext)
+    {
+        var query = ItemSearchQueryBuilder.BuildSearchQuery(searchContext, _context);
+
+        var totalItems = await query.CountAsync();
+
+        var totalPages = (int)Math.Ceiling(totalItems / (double)searchContext.PageSize);
+
+        var results = await query
+            .Skip((searchContext.PageNumber - 1) * searchContext.PageSize)
+            .Take(searchContext.PageSize)
+            .ToListAsync();
+
+        return new Page<Item>
         {
-            items.Add(item.ToDomain());
-        }
-
-        return items;
+            CurrentPage = searchContext.PageNumber,
+            TotalPages = totalPages,
+            TotalItems = totalItems,
+            Results = results.Select(x => x.ToDomain())
+        };
     }
 }

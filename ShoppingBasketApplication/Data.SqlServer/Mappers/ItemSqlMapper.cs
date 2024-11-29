@@ -22,7 +22,7 @@ public static class ItemSqlMapper
         };
     }
 
-    public static SqlEntities.Item ToSqlEntities(this DomainEntities.Item item)
+    public static SqlEntities.Item ToSqlEntity(this DomainEntities.Item item)
     {
         if (item == null)
         {

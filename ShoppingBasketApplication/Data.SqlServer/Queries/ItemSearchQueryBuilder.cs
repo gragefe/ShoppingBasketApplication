@@ -11,7 +11,7 @@ internal static class ItemSearchQueryBuilder
 
        if (!string.IsNullOrEmpty(searchContext.Name))
         {
-            query = query.Where(c => c.Name == searchContext.Name);
+            query = query.Where(c => c.Name.Contains(searchContext.Name));
         }
 
         if (!string.IsNullOrEmpty(searchContext.Description))

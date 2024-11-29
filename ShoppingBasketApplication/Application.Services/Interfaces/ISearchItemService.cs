@@ -4,5 +4,5 @@ using Application.DTO;
 
 public interface ISearchItemService
 {
-    Task<IEnumerable<Item>> SearechAsync(ItemSearchContext searchContext);
+    Task<Page<Item>> SearchAsync(ItemSearchContext searchContext);
 }

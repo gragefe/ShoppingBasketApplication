@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Services", "App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.SqlServer", "Data.SqlServer\Data.SqlServer.csproj", "{CC2D31BC-15C3-4152-969A-10ED5A549866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Crosscutting", "Infrastructure.Crosscutting\Infrastructure.Crosscutting.csproj", "{F1D217F1-77E0-4616-904F-E9A8500E5192}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{CC2D31BC-15C3-4152-969A-10ED5A549866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC2D31BC-15C3-4152-969A-10ED5A549866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC2D31BC-15C3-4152-969A-10ED5A549866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D217F1-77E0-4616-904F-E9A8500E5192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D217F1-77E0-4616-904F-E9A8500E5192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D217F1-77E0-4616-904F-E9A8500E5192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D217F1-77E0-4616-904F-E9A8500E5192}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +81,6 @@ Global
 		{4EA66599-0761-49B6-8589-18E69D70615B} = {C29D5010-6CC3-4071-90DF-8DB0644E1C58}
 		{C96CA0A4-6C9E-43DA-8207-868097A6B75B} = {C29D5010-6CC3-4071-90DF-8DB0644E1C58}
 		{CC2D31BC-15C3-4152-969A-10ED5A549866} = {F4DA2642-811E-4AAF-BE2E-00AF1A8A1EF8}
+		{F1D217F1-77E0-4616-904F-E9A8500E5192} = {FE61DDFF-A650-4827-89E9-535DD0C4D183}
 	EndGlobalSection
 EndGlobal
