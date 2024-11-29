@@ -1,4 +1,4 @@
-﻿namespace Application.Services.Interfaces;
+﻿namespace Application.Services.Interfaces.Item;
 
 using Application.DTO;
 

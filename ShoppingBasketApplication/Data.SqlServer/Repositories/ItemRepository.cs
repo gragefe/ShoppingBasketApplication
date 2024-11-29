@@ -5,6 +5,7 @@ using Data.SqlServer.Queries;
 using Domain.Model.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Domain.Model.Entities;
+using System.Collections.Generic;
 
 public class ItemRepository : IItemRepository
 {
@@ -23,6 +24,15 @@ public class ItemRepository : IItemRepository
         await _context.SaveChangesAsync();
 
         return ItemData.ToDomain();
+    }
+
+    public async Task<IEnumerable<Item>> GetByIdAsync(IEnumerable<Guid> ids)
+    {
+        var items = await _context.Items
+            .Where(item => ids.Contains(item.Id))
+            .ToListAsync();
+
+        return items.Select(i => i.ToDomain());
     }
 
     public async Task<Page<Item>> SearchAsync(ItemSearchContext searchContext)

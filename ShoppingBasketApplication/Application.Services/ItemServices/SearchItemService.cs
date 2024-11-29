@@ -1,12 +1,12 @@
-﻿namespace Application.Services;
+﻿namespace Application.Services.ItemServices;
 
 using Application.DTO;
-using Application.Services.Interfaces;
+using Application.Services.Interfaces.Item;
 using Application.Services.Mappers;
 using Domain.Model.Interfaces;
 using System.Threading.Tasks;
 
-public class SearchItemService: ISearchItemService
+public class SearchItemService : ISearchItemService
 {
     private readonly IItemRepository _repository;
 

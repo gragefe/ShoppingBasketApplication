@@ -22,7 +22,7 @@ public class ItemRepositoryTests
     }
 
     [Fact]
-    public async Task SearchAsync_ShouldReturnAllItems()
+    public async Task SearchAsync_SearchContextWithoutValues_ShouldReturnAllItems()
     {
         // Arrange
         var random = new Random();
@@ -50,11 +50,11 @@ public class ItemRepositoryTests
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.Results);
-        
+
         Assert.Equal(1, result.CurrentPage);
         Assert.Equal(20, result.TotalPages);
         Assert.Equal(100, result.TotalItems);
-        
+
 
         Assert.Equal(items.ElementAt(0).Name, result.Results.ElementAt(0).Name);
         Assert.Equal(items.ElementAt(1).Name, result.Results.ElementAt(1).Name);
@@ -62,7 +62,7 @@ public class ItemRepositoryTests
     }
 
     [Fact]
-    public async Task SearchAsync_ShouldReturnPagesWithSpecificSize()
+    public async Task SearchAsync_SearchContextWithPageSize_ShouldReturnPagesWithSpecificSize()
     {
         // Arrange
         var random = new Random();
@@ -102,7 +102,7 @@ public class ItemRepositoryTests
     }
 
     [Fact]
-    public async Task SearchAsync_ShouldReturnItemsFromSpecificPage()
+    public async Task SearchAsync_SearchContextWitPageNumber_ShouldReturnItemsFromSpecificPage()
     {
         // Arrange
         var random = new Random();
@@ -125,7 +125,7 @@ public class ItemRepositoryTests
         }
 
         // Act
-        var result = await _repository.SearchAsync(new ItemSearchContext { PageNumber = 2});
+        var result = await _repository.SearchAsync(new ItemSearchContext { PageNumber = 2 });
 
         // Assert
         Assert.NotNull(result);
@@ -142,7 +142,7 @@ public class ItemRepositoryTests
     }
 
     [Fact]
-    public async Task SearchAsync_ShouldReturnItemContainingSpecificName()
+    public async Task SearchAsync_SearchContextWithName_ShouldReturnItemContainingSpecificName()
     {
         // Arrange
         var item = new Item
@@ -179,7 +179,7 @@ public class ItemRepositoryTests
 
         await _repository.CreateAsync(item);
         await _repository.CreateAsync(item2);
-  
+
         // Act
         var result = await _repository.SearchAsync(new ItemSearchContext { Name = "item 000" });
 
@@ -193,5 +193,50 @@ public class ItemRepositoryTests
 
         Assert.Equal(item.Name, result.Results.ElementAt(0).Name);
         Assert.Equal(item2.Name, result.Results.ElementAt(1).Name);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ValidIds_ShouldReturnValidItems()
+    {
+        // Arrange
+        var random = new Random();
+        var items = new List<Item>();
+        var expectedResultNumber = 3;
+
+        for (int i = 0; i < 6; i++)
+        {
+            items.Add(new Item
+            {
+                Name = $"Name{i + 1}",
+                Description = $"Description{i + 1}",
+                Discounts = new List<Guid> { Guid.NewGuid() },
+                Price = random.Next(1, 4)
+            });
+        }
+
+        foreach (var item in items)
+        {
+            var itemData = await _repository.CreateAsync(item);
+            item.Id = itemData.Id;
+
+        }
+
+        var itemsIds = new List<Guid>
+        {
+            items.ElementAt(0).Id,
+            items.ElementAt(2).Id,
+            items.ElementAt(5).Id
+        };
+
+        // Act
+        var result = await _repository.GetByIdAsync(itemsIds);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedResultNumber, result.Count());
+
+        Assert.Equal(items.ElementAt(0).Id, result.ElementAt(0).Id);
+        Assert.Equal(items.ElementAt(2).Id, result.ElementAt(1).Id);
+        Assert.Equal(items.ElementAt(5).Id, result.ElementAt(2).Id);
     }
 }
