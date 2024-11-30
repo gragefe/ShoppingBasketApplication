@@ -5,12 +5,12 @@ using Application.Services.Interfaces.Basket;
 using Application.Services.Mappers;
 using Domain.Model.Interfaces;
 
-public class UpdateBasketItemService : IUpdateBasketItemsService
+public class UpdateBasketItemsService : IUpdateBasketItemsService
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IItemRepository _itemRepository;
 
-    public UpdateBasketItemService(IBasketRepository basketRepository, IItemRepository itemRepository)
+    public UpdateBasketItemsService(IBasketRepository basketRepository, IItemRepository itemRepository)
     {
         _basketRepository = basketRepository;
         _itemRepository = itemRepository;

@@ -25,25 +25,25 @@ public class BasketController : ControllerBase
         _removeBasketItemService = removeBasketItemService;
     }
 
-    [HttpGet(Name = "getBasket")]
+    [HttpGet, Route("")]
     public async Task<ActionResult<Basket>> GetAsync()
     {
         return this.Ok(await _getGetBasketService.GetAsync());
     }
 
-    [HttpPost(Name = "addBasketItems")]
+    [HttpPost, Route("addItems")]
     public async Task<ActionResult<Basket>> AddBasketItemsAsync([FromBody] Dictionary<Guid, int> items)
     {
         return this.Ok(await _addBasketItemService.AddBasketItemsAsync(items));
     }
 
-    [HttpGet(Name = "updateBasketItems")]
+    [HttpPut, Route("updateItems")]
     public async Task<ActionResult<Basket>> UpdateBasketItemsAsync(Dictionary<Guid, int> items)
     {
         return this.Ok(await _updateBasketItemService.UpdateBasketItemsAsync(items));
     }
 
-    [HttpGet(Name = "removeBasketItems")]
+    [HttpDelete, Route("removeItems")]
     public async Task<ActionResult<Basket>> removeBasketItemsAsync(List<Guid> items)
     {
         return this.Ok(await _removeBasketItemService.RemoveBasketItemsAsync(items));

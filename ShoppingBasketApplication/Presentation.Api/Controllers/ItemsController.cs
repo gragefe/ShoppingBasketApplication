@@ -16,13 +16,13 @@ public class ItemsController : ControllerBase
         _getItemByIdService = getItemByIdService;
     }
 
-    [HttpGet(Name = "GetByIdAsync")]
+    [HttpGet, Route("getById")]
     public async Task<ActionResult<IEnumerable<Item>>> GetByIdAsync([FromQuery] IEnumerable<Guid> ids)
     {
         return this.Ok(await _getItemByIdService.GetByIdAsync(ids));
     }
 
-    [HttpPost(Name = "SearchAsync")]
+    [HttpPost, Route("searchItems")]
     public async Task<ActionResult<Page<Item>>> SearchAsync([FromBody] ItemSearchContext searchContext)
     {
         return this.Ok(await _searchItemService.SearchAsync(searchContext));

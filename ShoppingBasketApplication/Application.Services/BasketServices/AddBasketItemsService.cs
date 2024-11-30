@@ -5,12 +5,12 @@ using Application.Services.Interfaces.Basket;
 using Application.Services.Mappers;
 using Domain.Model.Interfaces;
 
-public class AddBasketItemService : IAddBasketItemsService
+public class AddBasketItemsService : IAddBasketItemsService
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IItemRepository _itemRepository;
 
-    public AddBasketItemService(IBasketRepository basketRepository, IItemRepository itemRepository)
+    public AddBasketItemsService(IBasketRepository basketRepository, IItemRepository itemRepository)
     {
         _basketRepository = basketRepository;
         _itemRepository = itemRepository;
